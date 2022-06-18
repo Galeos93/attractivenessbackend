@@ -1,0 +1,23 @@
+transformer:
+  module: .image_normalizer
+  type: FaceNormalizer
+  args:
+    output_size: [112, 112]
+    margin: 0
+
+extractor:
+  module: .pytorch_mtcnn_extractor
+  type: MTCNNExtractor
+
+filter:
+  module: .utils
+  type: get_most_centered_bbox_idx
+
+model:
+  module: .classifiers
+  type: IRSE50
+  path: "resources/checkpoint-epoch98-lite.pth"
+  args:
+    num_classes: 1
+
+

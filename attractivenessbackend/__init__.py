@@ -1,0 +1,1 @@
+"""Beauty classifier service app"""

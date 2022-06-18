@@ -1,0 +1,69 @@
+swagger: "2.0"
+info:
+  description: "First API specification for attractiveness rater."
+  version: "0.1.0"
+  title: "Attractiveness Rater"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "alejandro.garcia.ihs@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "0.0.0.0:5000"
+tags:
+- name: "attractiveness"
+  description: "Rates one or many faces"
+schemes:
+- "https"
+- "http"
+paths:
+  /attractiveness/rate:
+    post:
+      tags:
+      - "attractiveness"
+      summary: "Given a face, returns its attractiveness score"
+      description: ""
+      operationId: "rateAttractiveness"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "file"
+        in: "formData"
+        description: "Input image"
+        required: true
+        type: "file"
+      responses:
+        400:
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        200:
+          description: "Succesful operation"
+          schema:
+            $ref: "#/definitions/RaterResponse"
+        500:
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+definitions:
+  ErrorResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+      status_code:
+        type: "integer"
+        format: "int8"
+  RaterResponse:
+    type: "object"
+    properties:
+      image:
+        type: "string"
+        format: "base64"
+      score:
+        type: "number"
+        format: "float64"
+        
